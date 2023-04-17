@@ -1,4 +1,4 @@
-
+#!/usr/bin/env python
 # coding: utf-8
 
 # In[1]:
@@ -10,6 +10,10 @@ import pandas as pd
 import pickle
 from sklearn.preprocessing import StandardScaler
 from sklearn.base import BaseEstimator, TransformerMixin
+
+
+# In[2]:
+
 
 # the custom scaler class 
 class CustomScaler(BaseEstimator,TransformerMixin): 
@@ -31,6 +35,9 @@ class CustomScaler(BaseEstimator,TransformerMixin):
         X_scaled = pd.DataFrame(self.scaler.transform(X[self.columns]), columns=self.columns)
         X_not_scaled = X.loc[:,~X.columns.isin(self.columns)]
         return pd.concat([X_not_scaled, X_scaled], axis=1)[init_col_order]
+
+
+# In[ ]:
 
 
 # create the special class that we are going to use from here on to predict new data
