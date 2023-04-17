@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[60]:
+# In[11]:
 
 
 import numpy as np
@@ -11,7 +11,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.base import BaseEstimator, TransformerMixin
 
 
-# In[61]:
+# In[12]:
 
 
 # the custom scaler class 
@@ -36,7 +36,7 @@ class CustomScaler(BaseEstimator,TransformerMixin):
         return pd.concat([X_not_scaled, X_scaled], axis=1)[init_col_order]
 
 
-# In[62]:
+# In[13]:
 
 
 # create the special class that we are going to use from here on to predict new data
@@ -117,6 +117,12 @@ class absenteeism_model():
 
             # map 'Education' variables; the result is a dummy
             df['Education'] = df['Education'].map({1:0, 2:1, 3:1, 4:1})
+            
+            # map 'Reason' variables; the result is a dummy
+            df['Reason 1'] = df['Reason 1'].map({False:0,True:1})
+            df['Reason 2'] = df['Reason 2'].map({False:0,True:1})
+            df['Reason 3'] = df['Reason 3'].map({False:0,True:1})
+            df['Reason 4'] = df['Reason 4'].map({False:0,True:1})
 
             # replace the NaN values
             df = df.fillna(value=0)
@@ -154,22 +160,10 @@ class absenteeism_model():
                 return self.preprocessed_data
 
 
-# In[66]:
+# In[ ]:
 
 
-# model = absenteeism_model('model','scaler')
 
-
-# In[67]:
-
-
-# model.load_and_clean_data('Absenteeism_new_data.csv')
-
-
-# In[68]:
-
-
-# model.predicted_outputs()
 
 
 # In[ ]:
