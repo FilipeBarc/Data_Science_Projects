@@ -1,10 +1,9 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[60]:
 
 
-# import all libraries needed
 import numpy as np
 import pandas as pd
 import pickle
@@ -12,7 +11,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.base import BaseEstimator, TransformerMixin
 
 
-# In[2]:
+# In[61]:
 
 
 # the custom scaler class 
@@ -37,7 +36,7 @@ class CustomScaler(BaseEstimator,TransformerMixin):
         return pd.concat([X_not_scaled, X_scaled], axis=1)[init_col_order]
 
 
-# In[ ]:
+# In[62]:
 
 
 # create the special class that we are going to use from here on to predict new data
@@ -81,13 +80,13 @@ class absenteeism_model():
             # note: there is a more universal version of this code, however the following will best suit our current purposes             
             column_names = ['Date', 'Transportation Expense', 'Distance to Work', 'Age',
                            'Daily Work Load Average', 'Body Mass Index', 'Education', 'Children',
-                           'Pet', 'Absenteeism Time in Hours', 'Reason_1', 'Reason_2', 'Reason_3', 'Reason_4']
+                           'Pets', 'Absenteeism Time in Hours', 'Reason 1', 'Reason 2', 'Reason 3', 'Reason 4']
             df.columns = column_names
 
             # re-order the columns in df
-            column_names_reordered = ['Reason_1', 'Reason_2', 'Reason_3', 'Reason_4', 'Date', 'Transportation Expense', 
+            column_names_reordered = ['Reason 1', 'Reason 2', 'Reason 3', 'Reason 4', 'Date', 'Transportation Expense', 
                                       'Distance to Work', 'Age', 'Daily Work Load Average', 'Body Mass Index', 'Education', 
-                                      'Children', 'Pet', 'Absenteeism Time in Hours']
+                                      'Children', 'Pets', 'Absenteeism Time in Hours']
             df = df[column_names_reordered]
       
             # convert the 'Date' column into datetime
@@ -99,7 +98,7 @@ class absenteeism_model():
                 list_months.append(df['Date'][i].month)
 
             # insert the values in a new column in df, called 'Month Value'
-            df['Month Value'] = list_months
+            df['Month Values'] = list_months
 
             # create a new feature called 'Day of the Week'
             df['Day of the Week'] = df['Date'].apply(lambda x: x.weekday())
@@ -109,10 +108,10 @@ class absenteeism_model():
             df = df.drop(['Date'], axis = 1)
 
             # re-order the columns in df
-            column_names_upd = ['Reason_1', 'Reason_2', 'Reason_3', 'Reason_4', 'Month Value', 'Day of the Week',
+            column_names_upd = ['Reason 1', 'Reason 2', 'Reason 3', 'Reason 4', 'Month Values', 'Day of the Week',
                                 'Transportation Expense', 'Distance to Work', 'Age',
                                 'Daily Work Load Average', 'Body Mass Index', 'Education', 'Children',
-                                'Pet', 'Absenteeism Time in Hours']
+                                'Pets', 'Absenteeism Time in Hours']
             df = df[column_names_upd]
 
 
@@ -153,4 +152,28 @@ class absenteeism_model():
                 self.preprocessed_data['Probability'] = self.reg.predict_proba(self.data)[:,1]
                 self.preprocessed_data ['Prediction'] = self.reg.predict(self.data)
                 return self.preprocessed_data
+
+
+# In[66]:
+
+
+# model = absenteeism_model('model','scaler')
+
+
+# In[67]:
+
+
+# model.load_and_clean_data('Absenteeism_new_data.csv')
+
+
+# In[68]:
+
+
+# model.predicted_outputs()
+
+
+# In[ ]:
+
+
+
 
